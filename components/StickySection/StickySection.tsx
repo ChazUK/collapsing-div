@@ -52,6 +52,13 @@ export default function StickySection({
         data-index={index}
         data-position={_stickyPosition}
       />
+      <div
+        className={styles.trigger}
+        style={{ top: triggerPosition }}
+        data-index={index}
+        data-position={triggerPosition}
+        data-squash={h}
+      />
 
       <h2
         ref={titleRef}
