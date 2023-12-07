@@ -1,9 +1,9 @@
 "use client";
 
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Fragment, ReactNode, useEffect, useRef, useState } from "react";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import styles from "./sticky-section.module.scss";
+import styles from "./clip-path.module.scss";
 
 type Props = {
   stickyPosition: number;
@@ -11,16 +11,11 @@ type Props = {
   children?: ReactNode;
 };
 
-export default function StickySection({
-  stickyPosition,
-  index,
-  children,
-}: Props) {
+export default function ClipPath({ stickyPosition, index, children }: Props) {
   const [_stickyPosition, setStickyPosition] = useState<number>(stickyPosition);
   const [copyHeight, setCopyHeight] = useState<number>(0);
   const [triggerPosition, setTriggerPosition] = useState<number>(0);
   const copyRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -37,10 +32,10 @@ export default function StickySection({
   }, []);
 
   const { scrollYProgress } = useScroll({
-    target: scrollRef,
+    target: copyRef,
     offset: [`start ${triggerPosition}px`, `end ${triggerPosition}px`],
   });
-  const h = useTransform(scrollYProgress, [0, 1], [copyHeight, 0]);
+  const h = useTransform(scrollYProgress, [0, 1], [0, copyHeight]);
 
   return (
     <Fragment>
@@ -66,27 +61,16 @@ export default function StickySection({
         Section Title {index + 1}
       </h2>
 
-      <div
-        ref={scrollRef}
-        className={styles.ghostainer}
-        style={{ height: copyHeight === 0 ? "auto" : copyHeight }}
+      <motion.div
+        ref={copyRef}
+        className={styles.copy}
+        initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+        animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
+        // Need a way to push progress from scrollYProgress to animate
+        // style={{ clipPath: `polygon(0 ${p}%, 100% ${p}%, 100% 100%, 0 100%);` }}
       >
-        <motion.div
-          className={styles.squashtainer}
-          style={{
-            height: copyHeight === 0 ? "auto" : h,
-            position: Boolean(copyHeight) ? "absolute" : "initial",
-          }}
-        >
-          <div
-            ref={copyRef}
-            className={styles.copy}
-            style={{ position: Boolean(copyHeight) ? "absolute" : "initial" }}
-          >
-            {children}
-          </div>
-        </motion.div>
-      </div>
+        {children}
+      </motion.div>
     </Fragment>
   );
 }

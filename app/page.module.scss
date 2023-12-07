@@ -6,3 +6,22 @@
   font-size: 1.5rem;
   gap: 1rem;
 }
+
+.spacer {
+  height: 30vh;
+
+  &--large {
+    height: 100vh;
+  }
+}
+
+.page-container {
+  max-width: 60rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.header {
+  padding: 0.5rem 1rem;
+  background: blanchedalmond;
+}

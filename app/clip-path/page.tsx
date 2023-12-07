@@ -1,6 +1,7 @@
-import StickySection from "@/components/StickySection/StickySection";
+import ClipPath from "@/components/ClipPath/ClipPath";
 import { Fragment } from "react";
 import LoremIpsum from "react-lorem-ipsum";
+
 import styles from "../page.module.scss";
 
 export default function Height() {
@@ -11,9 +12,9 @@ export default function Height() {
         <h1 className={styles["header"]}>Hello World</h1>
 
         {new Array(3).fill(null).map((_, i) => (
-          <StickySection key={i} stickyPosition={100} index={i}>
+          <ClipPath key={i} stickyPosition={100} index={i}>
             <LoremIpsum p={3} />
-          </StickySection>
+          </ClipPath>
         ))}
       </div>
       <div className={styles["spacer--large"]} />
