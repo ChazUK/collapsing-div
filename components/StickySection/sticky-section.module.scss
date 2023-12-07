@@ -1,0 +1,49 @@
+.title {
+  position: sticky;
+  padding: 0.5rem 1rem;
+  margin-top: 2rem;
+  margin-bottom: 0;
+  background: cadetblue;
+}
+
+.ghostainer {
+  position: relative;
+  z-index: -1;
+  border: 1px dashed rgb(0 0 255 / 50%);
+}
+
+.copy {
+  padding: 1rem;
+  background-color: lemonchiffon;
+
+  & > *:first-of-type {
+    margin-top: 0;
+  }
+
+  & > *:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+// Debug Styles
+
+.hr {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  border-top: 1px dashed rgb(255 0 0 / 50%);
+  margin: 0;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    padding: 0.175rem 0.25rem;
+    background-color: rgb(255 0 0 / 50%);
+    color: white;
+    content: "Heading " attr(data-index) " position: " attr(data-position) "px";
+    font-size: 0.75rem;
+  }
+}
