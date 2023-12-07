@@ -65,16 +65,26 @@ export default function StickySection({
         className={styles.title}
         style={{ top: _stickyPosition }}
       >
-        Section Title {index + 1} {triggerPosition}
+        Section Title {index + 1}
       </h2>
 
       <div
         ref={scrollRef}
         className={styles.ghostainer}
-        style={{ height: copyHeight }}
+        style={{ height: copyHeight === 0 ? "auto" : copyHeight }}
       >
-        <motion.div className={styles.squashtainer} style={{ height: h }}>
-          <div ref={copyRef} className={styles.copy}>
+        <motion.div
+          className={styles.squashtainer}
+          style={{
+            height: copyHeight === 0 ? "auto" : h,
+            position: Boolean(copyHeight) ? "absolute" : "initial",
+          }}
+        >
+          <div
+            ref={copyRef}
+            className={styles.copy}
+            style={{ position: Boolean(copyHeight) ? "absolute" : "initial" }}
+          >
             {children}
           </div>
         </motion.div>
