@@ -2,6 +2,7 @@
 
 import { Fragment, ReactNode, useEffect, useRef, useState } from "react";
 
+import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./sticky-section.module.scss";
 
 type Props = {
@@ -20,8 +21,9 @@ export default function StickySection({
   const [_stickyPosition, setStickyPosition] = useState<number>(stickyPosition);
   const [copyHeight, setCopyHeight] = useState<number>(0);
   const [triggerPosition, setTriggerPosition] = useState<number>(0);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const copyRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     const title = titleRef.current;
@@ -29,10 +31,18 @@ export default function StickySection({
 
     if (!title || !copy) return;
 
+    const s = stickyPosition + title.offsetHeight * index;
+
     setCopyHeight(copy.offsetHeight);
-    setStickyPosition(stickyPosition + title.offsetHeight * index);
-    setTriggerPosition(_stickyPosition + title.offsetHeight);
+    setStickyPosition(s);
+    setTriggerPosition(s + title.offsetHeight);
   }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: [`start ${triggerPosition}px`, `end ${triggerPosition}px`],
+  });
+  const h = useTransform(scrollYProgress, [0, 1], [copyHeight, 0]);
 
   return (
     <Fragment>
@@ -42,17 +52,25 @@ export default function StickySection({
         data-index={index}
         data-position={_stickyPosition}
       />
+
       <h2
         ref={titleRef}
         className={styles.title}
         style={{ top: _stickyPosition }}
       >
-        Section Title {index + 1} {copyHeight}
+        Section Title {index + 1} {triggerPosition}
       </h2>
-      <div className={styles.ghostainer} style={{ height: copyHeight }}>
-        <div ref={copyRef} className={styles.copy}>
-          {children}
-        </div>
+
+      <div
+        ref={scrollRef}
+        className={styles.ghostainer}
+        style={{ height: copyHeight }}
+      >
+        <motion.div className={styles.squashtainer} style={{ height: h }}>
+          <div ref={copyRef} className={styles.copy}>
+            {children}
+          </div>
+        </motion.div>
       </div>
     </Fragment>
   );

@@ -12,7 +12,19 @@
   border: 1px dashed rgb(0 0 255 / 50%);
 }
 
+.squashtainer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
 .copy {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
   padding: 1rem;
   background-color: lemonchiffon;
 
@@ -43,7 +55,22 @@
     padding: 0.175rem 0.25rem;
     background-color: rgb(255 0 0 / 50%);
     color: white;
-    content: "Heading " attr(data-index) " position: " attr(data-position) "px";
+    content: "Heading " attr(data-index) " sticky position: "
+      attr(data-position) "px";
+    font-size: 0.75rem;
+  }
+}
+
+.height {
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    padding: 0.175rem 0.25rem;
+    background-color: rgb(255 0 0 / 50%);
+    color: white;
+    content: "Copy height " attr(data-height) "px";
     font-size: 0.75rem;
   }
 }
