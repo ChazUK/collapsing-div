@@ -12,9 +12,7 @@ export default function Height() {
 
         {new Array(3).fill(null).map((_, i) => (
           <HeightAnimated key={i} stickyPosition={100} index={i}>
-            <div className={styles["section"]}>
-              <LoremIpsum p={3} />
-            </div>
+            <LoremIpsum p={3} />
           </HeightAnimated>
         ))}
       </div>
