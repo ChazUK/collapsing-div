@@ -13,7 +13,6 @@ type Props = {
 
 export default function ClipPath({ stickyPosition, index, children }: Props) {
   const [_stickyPosition, setStickyPosition] = useState<number>(stickyPosition);
-  const [copyHeight, setCopyHeight] = useState<number>(0);
   const [triggerPosition, setTriggerPosition] = useState<number>(0);
   const copyRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -26,7 +25,6 @@ export default function ClipPath({ stickyPosition, index, children }: Props) {
 
     const s = stickyPosition + title.offsetHeight * index;
 
-    setCopyHeight(copy.offsetHeight);
     setStickyPosition(s);
     setTriggerPosition(s + title.offsetHeight);
   }, []);
@@ -35,7 +33,7 @@ export default function ClipPath({ stickyPosition, index, children }: Props) {
     target: copyRef,
     offset: [`start ${triggerPosition}px`, `end ${triggerPosition}px`],
   });
-  const h = useTransform(scrollYProgress, [0, 1], [0, copyHeight]);
+  const p = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   return (
     <Fragment>
@@ -50,7 +48,6 @@ export default function ClipPath({ stickyPosition, index, children }: Props) {
         style={{ top: triggerPosition }}
         data-index={index}
         data-position={triggerPosition}
-        data-squash={h}
       />
 
       <h2
@@ -64,10 +61,8 @@ export default function ClipPath({ stickyPosition, index, children }: Props) {
       <motion.div
         ref={copyRef}
         className={styles.copy}
-        initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
-        animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
         // Need a way to push progress from scrollYProgress to animate
-        // style={{ clipPath: `polygon(0 ${p}%, 100% ${p}%, 100% 100%, 0 100%);` }}
+        style={{ clipPath: `inset(${p}% 0% 0% 0%)` }}
       >
         {children}
       </motion.div>
