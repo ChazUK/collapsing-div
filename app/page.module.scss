@@ -1,6 +1,7 @@
 .main {
   display: flex;
   height: 100vh;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
@@ -24,4 +25,10 @@
 .header {
   padding: 0.5rem 1rem;
   background: blanchedalmond;
+}
+
+.section {
+  background-color: grey;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }

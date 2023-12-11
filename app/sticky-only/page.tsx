@@ -1,9 +1,9 @@
-import HeightAnimated from "@/components/HeightAnimated/HeightAnimated";
+import StickySection from "@/components/StickySection/StickySection";
 import { Fragment } from "react";
 import LoremIpsum from "react-lorem-ipsum";
 import styles from "../page.module.scss";
 
-export default function Height() {
+export default function StickyOnly() {
   return (
     <Fragment>
       <div className={styles["spacer"]} />
@@ -11,11 +11,11 @@ export default function Height() {
         <h1 className={styles["header"]}>Hello World</h1>
 
         {new Array(3).fill(null).map((_, i) => (
-          <HeightAnimated key={i} stickyPosition={100} index={i}>
+          <StickySection key={i} stickyPosition={100} index={i}>
             <div className={styles["section"]}>
               <LoremIpsum p={3} />
             </div>
-          </HeightAnimated>
+          </StickySection>
         ))}
       </div>
       <div className={styles["spacer--large"]} />
